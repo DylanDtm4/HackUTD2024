@@ -68,7 +68,7 @@ const RemoveFile = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>Manage Uploaded Files</h1>
       {files.length > 0 ? (
         <ul>

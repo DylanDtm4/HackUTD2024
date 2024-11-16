@@ -6,10 +6,12 @@ import "./styles/styles.css"; // Import the CSS file
 
 function App() {
   return (
-    <div class="container">
-      <FileUpload />
-      <FileDisplay />
-      <RemoveFile />
+    <div className="bg">
+      <div className="container">
+        <FileUpload />
+        <FileDisplay />
+        <RemoveFile />
+      </div>
     </div>
   );
 }

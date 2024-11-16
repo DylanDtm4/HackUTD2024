@@ -38,7 +38,7 @@ input[type="file"] {
 /* Buttons */
 button {
   display: inline-block;
-  background-color: #007bff;
+  background-color: #54dde8;
   color: white;
   padding: 10px 15px;
   font-size: 16px;
@@ -50,7 +50,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #40b7ba;
 }
 
 button:disabled {
@@ -76,13 +76,11 @@ ul li {
 }
 
 ul li button {
-  background-color: #dc3545;
-  padding: 5px 10px;
-  font-size: 14px;
+  background-color: #f5a3b6;
 }
 
 ul li button:hover {
-  background-color: #b02a37;
+  background-color: #e66f60;
 }
 
 /* Uploaded Data */
@@ -92,4 +90,34 @@ pre {
   border-radius: 4px;
   border: 1px solid #ddd;
   overflow-x: auto;
+}
+
+/* Flex container for file input and upload button */
+.upload-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between the input and button */
+  justify-content: center; /* Center the content */
+  margin-bottom: 20px;
+}
+
+/* Adjust input for consistent alignment */
+.upload-container input[type="file"] {
+  flex-grow: 1; /* Optional: Makes the input stretch */
+}
+
+a {
+  color: #6086e6;
+}
+
+a:hover {
+  color: #163950;
+}
+
+a:visited {
+  color: #a7a4f5;
+}
+
+.bg {
+  background-image: url("../assets/bg.png");
 }

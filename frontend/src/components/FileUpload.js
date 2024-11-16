@@ -42,10 +42,12 @@ const FileUpload = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Upload File to Pinata</h1>
-      <input type="file" onChange={handleFileChange} ref={fileInputRef} />
-      <button onClick={handleUpload}>Upload</button>
+      <div className="upload-container">
+        <input type="file" onChange={handleFileChange} ref={fileInputRef} />
+        <button onClick={handleUpload}>Upload</button>
+      </div>
       {uploadedData && (
         <div>
           <h3>File Uploaded:</h3>
