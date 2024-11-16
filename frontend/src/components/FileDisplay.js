@@ -18,7 +18,7 @@ const FileDisplay = () => {
 
   useEffect(() => {
     fetchFiles();
-  });
+  }, []);
 
   if (loading) {
     return <p>Loading files...</p>;

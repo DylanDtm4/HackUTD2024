@@ -1,11 +1,14 @@
 import os
+import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 from routes import api_routes
 
+# Load environment variables
 load_dotenv()
 
+# Setup Flask app
 app = Flask(__name__)
 CORS(app)
 
@@ -59,5 +62,44 @@ app.register_blueprint(api_routes, url_prefix='/api')
 #     else:
 #         return jsonify({'error': 'Failed to retrieve files'}), response.status_code
 
-if __name__ == '__main__':
+@app.route('/api/delete-file/<hash>', methods=['DELETE'])
+def delete_file(hash):
+    logger.debug(f"Delete request received for hash: {hash}")
+    headers = {
+        "pinata_api_key": PINATA_API_KEY,
+        "pinata_secret_api_key": PINATA_API_SECRET,
+        "Content-Type": "application/json",
+    }
+    url = DELETE_URL
+    data = {"ipfs_pin_hash": hash}
+
+    try:
+        # Send POST request to Pinata API
+        response = requests.post(url, headers=headers, json=data)
+        logger.debug(f"Pinata response status: {response.status_code}")
+
+        if response.status_code == 200:
+            # Handle empty response gracefully
+            try:
+                # If there's no body, return success
+                response.json()
+            except ValueError:
+                pass  # Empty body, no error
+
+            return jsonify({'message': 'File deleted successfully'}), 200
+        else:
+            # Attempt to parse error details if available
+            try:
+                error_details = response.json()
+            except ValueError:
+                error_details = {"error": "Invalid response from Pinata API"}
+
+            logger.error(f"Failed to delete file: {error_details}")
+            return jsonify({'error': 'Failed to delete file', 'details': error_details}), response.status_code
+    except Exception as e:
+        logger.error(f"Error during deletion: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+if __name__ == "__main__":
     app.run(debug=True)
