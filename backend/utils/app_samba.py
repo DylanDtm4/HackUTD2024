@@ -1,26 +1,36 @@
+import os
 import json
 from datetime import datetime
 import openai
-import samba_prompts
+import utils.samba_prompts as samba_prompts
+
 client = openai.OpenAI(
-    api_key="be0a187e-4e03-4a41-b612-7bd5f41700a0",
+    api_key="90a7b7fe-206a-4f84-8122-a9d9879a8e21",
     base_url="https://api.sambanova.ai/v1",
 )
 
-def prompt_Samba(prompt):
+def prompt_Samba_json(prompt):
+    # Call the API and get the response
     response = client.chat.completions.create(
-        model='Meta-Llama-3.1-70B-Instruct',
-        messages=[{"role":"system","content":samba_prompts.categorization_prompt},{"role":"user","content":prompt}],
-        temperature =  0.2,
-        top_p = 0.8
+        model='Meta-Llama-3.1-405B-Instruct',
+        messages=[{"role": "system", "content": samba_prompts.categorization_prompt},
+                  {"role": "user", "content": prompt}],
+        temperature=0.2,
+        top_p=0.8
     )
+    
+    return response.choices[0].message.content
 
-    # Generate a unique filename based on timestamp
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"response_{timestamp}.json"
+def prompt_Samba_result(results, json_string):
+    # Call the API and get the response
+    prompt = json_string + '\n' + str(results)
 
-    # Write the JSON response to the new file
-    with open(filename, "w") as json_file:
-        json.dump(response, json_file, indent=4)
-
-    print(f"Response saved to {filename}")
+    response = client.chat.completions.create(
+        model='Meta-Llama-3.1-405B-Instruct',
+        messages=[{"role": "system", "content": samba_prompts.result_prompt},
+                  {"role": "user", "content": prompt}],
+        temperature=0.2,
+        top_p=0.8
+    )
+    
+    return response.choices[0].message.content
