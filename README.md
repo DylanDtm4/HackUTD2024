@@ -1,5 +1,5 @@
 # **HackUTD2024: Ripple Effect Project**
-A Flask-based API for interacting with [Pinata](https://www.pinata.cloud/) (IPFS) to retrive and upload files, combined with a **Math Problem Solver** that reads and solves word problems while displaying step-by-step explanations.
+A Flask-based API for interacting with [Pinata](https://www.pinata.cloud/) (IPFS) to upload and retrieve files, combined with a **Math Problem Solver** that optimizes [SambaNova's advanced OpenAI technology](https://sambanova.ai/) to read and solve word problems, while displaying step-by-step explanations.
 
 ---
 ## The Team
