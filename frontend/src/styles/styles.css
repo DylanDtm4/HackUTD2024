@@ -22,7 +22,6 @@ body {
 h1 {
   text-align: center;
   color: #555;
-  margin-bottom: 20px;
 }
 
 /* File Input */
@@ -118,6 +117,33 @@ a:visited {
   color: #a7a4f5;
 }
 
-.bg {
+body {
   background-image: url("../assets/bg.png");
+}
+
+/* Styling for Ordered List */
+ol {
+  padding-left: 20px; /* Indent list items */
+  margin-bottom: 20px; /* Add spacing after the list */
+}
+
+ol li {
+  margin-bottom: 10px; /* Space between each list item */
+}
+
+/* Styling for Strong Tags */
+strong {
+  color: #333; /* Make the text slightly darker for emphasis */
+  font-weight: bold; /* Ensure strong tags appear bold */
+}
+
+/* Center Alignment for H1 */
+h1 {
+  font-size: 2rem; /* Slightly larger font size for emphasis */
+  color: #444; /* Slightly darker color for better contrast */
+}
+
+/* Remove list numbering for specific list items */
+.list-style {
+  list-style-type: disc;
 }

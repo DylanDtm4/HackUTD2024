@@ -28,9 +28,11 @@ const FileUpload = () => {
 
       setUploadedData(response.data);
       resetFileInput(); // Reset the file input after successful upload
+      alert("File uploaded successfully!");
       window.location.reload();
     } catch (error) {
       console.error("Upload failed:", error);
+      alert("Failed to upload file");
     }
   };
 
