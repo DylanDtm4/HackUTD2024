@@ -1,9 +1,11 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import LoadingOverlay from "./LoadingOverlay"; // Import the LoadingOverlay component
 
 const FileUpload = () => {
   const [fileContents, setFileContents] = useState(""); // To store the file contents
   const [fileName, setFileName] = useState(""); // Store original file name
+  const [loading, setLoading] = useState(false); // Track loading state
   const fileInputRef = useRef(null); // Create a ref for the file input
 
   const handleFileChange = (event) => {
@@ -25,6 +27,8 @@ const FileUpload = () => {
     }
 
     try {
+      setLoading(true); // Enter loading state
+
       // Get the processed content from handleProcessString
       const processedContent = await handleProcessString();
 
@@ -48,7 +52,7 @@ const FileUpload = () => {
         },
       });
 
-      alert("File uploaded successfully!");
+      // alert("File uploaded successfully!");
 
       // Get the CID and log the file URL
       const cid = response.data.IpfsHash;
@@ -61,6 +65,8 @@ const FileUpload = () => {
     } catch (error) {
       console.error("Upload failed:", error);
       alert("Failed to upload file content");
+    } finally {
+      setLoading(false); // Exit loading state
     }
   };
 
@@ -71,7 +77,7 @@ const FileUpload = () => {
         content: fileContents,
       });
 
-      alert("String processed successfully!");
+      // alert("String processed successfully!");
 
       // Log the processed content
       console.log("Processed Content:", response.data.processedContent);
@@ -98,7 +104,9 @@ const FileUpload = () => {
       <h1>Upload and Process File</h1>
       <div className="upload-container">
         <input type="file" onChange={handleFileChange} ref={fileInputRef} />
-        <button onClick={handleUpload}>Solve</button>
+        <button onClick={handleUpload} disabled={loading}>
+          Solve
+        </button>
       </div>
 
       {fileContents && (
@@ -107,6 +115,9 @@ const FileUpload = () => {
           <pre>{fileContents}</pre>
         </div>
       )}
+
+      {/* Display the full-screen loader when loading */}
+      {loading && <LoadingOverlay />}
     </div>
   );
 };
