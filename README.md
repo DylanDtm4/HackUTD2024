@@ -2,6 +2,13 @@
 A Flask-based API for interacting with [Pinata](https://www.pinata.cloud/) (IPFS) to retrive and upload files, combined with a **Math Problem Solver** that reads and solves word problems while displaying step-by-step explanations.
 
 ---
+## The Team
+- [DylanDtm](https://github.com/DylanDtm4): Front end developer
+- [NealKapadia](https://github.com/NealKapadia): Front end developer
+- [JuuyouSan](https://github.com/JuuyouSan): Back end developer
+- [justi-lai](https://github.com/justi-lai): Back end developer
+
+---
 ## Program
 - **Math Problem Solver**: Upload a .txt file containing a word math problem, and this program will solve it while displaying a step-by-step walk through on how to solve the question
 
