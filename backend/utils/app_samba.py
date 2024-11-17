@@ -29,7 +29,7 @@ def prompt_Samba_result(results, json_string):
         model='Meta-Llama-3.1-405B-Instruct',
         messages=[{"role": "system", "content": samba_prompts.result_prompt},
                   {"role": "user", "content": prompt}],
-        temperature=0.2,
+        temperature=0.1,
         top_p=0.8
     )
     
