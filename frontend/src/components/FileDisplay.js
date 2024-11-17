@@ -34,7 +34,7 @@ const FileDisplay = () => {
             <li key={index}>
               <p>Filename: {file.metadata.name || "N/A"}</p>
               <a
-                href={`https://gateway.pinata.cloud/ipfs/${file.ipfs_pin_hash}`}
+                href={`https://harlequin-neighbouring-primate-840.mypinata.cloud/ipfs/${file.ipfs_pin_hash}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

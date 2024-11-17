@@ -56,7 +56,7 @@ const FileUpload = () => {
 
       // Get the CID and log the file URL
       const cid = response.data.IpfsHash;
-      const fileUrl = `https://gateway.pinata.cloud/ipfs/${cid}`;
+      const fileUrl = `https://harlequin-neighbouring-primate-840.mypinata.cloud/ipfs/${cid}`;
       console.log("File URL:", fileUrl);
 
       // Reset the file input after successful upload
