@@ -118,6 +118,7 @@ def process_string():
         json_string = prompt_Samba_json(content)
         results = solve(json_string)
         processed_content = prompt_Samba_result(results, json_string)
+        processed_content = content + '\n\n' + processed_content
         return jsonify({'processedContent': processed_content})
     except Exception as e:
         # Handle unexpected errors gracefully

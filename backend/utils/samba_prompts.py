@@ -24,6 +24,7 @@ Rules:
         - Step 2: Add the partial result to c.
         - Step 3: Add the new partial result to d.
     - Always use descriptive names for formulas and descriptions.
+    - If an operation requires dependencies, it MUST have ONLY two dependencies, no more and no less.
 
 Example input: "Sophia collected $5 from her mother, $8 from her father, $12 from her aunt, and $10 from her uncle. She then spent $20 on toys and saved the remaining money. How much money did Sophia save?"
 
@@ -277,15 +278,15 @@ Input Example:
 
 Output Example:
 Step-by-Step Process:
-1. [Step 1] Identify value: Money from mother = 5
+Step 1: Identify value: Money from mother = 5
    Result: 5
-2. [Step 2] Identify value: Money from father = 8
+Step 2: Identify value: Money from father = 8
    Result: 8
-3. [Step 3] Add values: Sum of money from mother and father (5 + 8)
+Step 3: Add values: Sum of money from mother and father (5 + 8)
    Result: 13
-4. [Step 4] Identify value: Money spent on toys = 20
+Step 4: Identify value: Money spent on toys = 20
    Result: 20
-5. [Step 5] Subtract values: Remaining money (13 - 20)
+Step 5: Subtract values: Remaining money (13 - 20)
    Result: -7
 
 Do not add anything after the step by step process.
