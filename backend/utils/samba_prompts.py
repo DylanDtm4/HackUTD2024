@@ -1,5 +1,5 @@
 categorization_prompt = """
-You are a tool for breaking down math word problems into structured JSON format.
+You are a tool for breaking down math word problems into structured JSON format to eventually be structured into a tree and topologically sorted.
 Do not add the heading and ending ```.
 
 Your task:
@@ -7,15 +7,22 @@ Your task:
     2. Each step should include:
         - A unique ID.
         - The mathematical operation performed (only add, sub, mult, div, or identify for recognizing values).
+            - identify should only be used for constants, coefficients, and exponents.
+            - This is the list of available operations:
+                - add: two dependencies
+                - sub: two dependencies
+                - mult: two dependencies
+                - div: two dependencies
+                - pow: two dependencies
+                - square: one dependency
         - The formula of the operation (if applicable).
         - The identifying value of the step (if available). If not available (not value), the value is null.
         - A description of what the step is doing.
         - Dependencies (list of previous step IDs required for this step).
-          - Only operations other than identify will have dependencies.
-          - There can only be **two dependencies per operation**. 
-          - For chained operations with more than two dependencies, break them into smaller steps.
+          - Only operations other than identify will have dependencies. 
+          - For chained operations with more than two dependencies, break them into smaller steps of two dependencies.
     3. If an operation requires more than two dependencies, create intermediate steps such that each intermediate step depends on at most two prior steps.
-    5. Include the exact mathematical operation used (e.g., addition: a + b, division: a / b).
+    4. Include the exact mathematical operation used (e.g., addition: a + b, division: a / b).
 
 Rules:
     - For chained operations, split into multiple steps. For example:
@@ -24,7 +31,13 @@ Rules:
         - Step 2: Add the partial result to c.
         - Step 3: Add the new partial result to d.
     - Always use descriptive names for formulas and descriptions.
-    - If an operation requires dependencies, it MUST have ONLY two dependencies, no more and no less.
+    - Do not give the wrong number of dependencies for the operation.
+    - Do not nest dependencies.
+    - Keep dependencies as a list of integers only.
+
+Notes to remember:
+    - Keep in mind to not cause accidental double negatives by saying 0 - 3 as 0 sub -3.
+    - Try to make fractions/proportions into constants first before operating.
 
 Example input: "Sophia collected $5 from her mother, $8 from her father, $12 from her aunt, and $10 from her uncle. She then spent $20 on toys and saved the remaining money. How much money did Sophia save?"
 
@@ -204,6 +217,68 @@ Example output:
             "dependencies": [
                 7,
                 8
+            ]
+        }
+    ]
+}
+
+Example INCORRECT Output:
+{
+    "steps": [
+        {
+            "id": 1,
+            "operation": "identify",
+            "formula": null,
+            "value": 120,
+            "description": "Number of seats per row in VIP section",
+            "dependencies": []
+        },
+        {
+            "id": 2,
+            "operation": "identify",
+            "formula": null,
+            "value": 5,
+            "description": "Number of rows in VIP section",
+            "dependencies": []
+        },
+        {
+            "id": 3,
+            "operation": "mult",
+            "formula": "total_seats = seats_per_row * number_of_rows",
+            "value": null,
+            "description": "Calculate total number of seats in VIP section",
+            "dependencies": [
+                1,
+                2
+            ]
+        },
+        {
+            "id": 4,
+            "operation": "mult",
+            "formula": "seats_sold = total_seats * 0.5",
+            "value": null,
+            "description": "Calculate number of seats sold",
+            "dependencies": [
+                3                               // Error here because mult should have two dependencies
+            ]
+        },
+        {
+            "id": 5,
+            "operation": "identify",
+            "formula": null,
+            "value": 50,
+            "description": "Cost of each ticket",
+            "dependencies": []
+        },
+        {
+            "id": 6,
+            "operation": "mult",
+            "formula": "total_money_earned = seats_sold * ticket_cost",
+            "value": null,
+            "description": "Calculate total money earned from sold tickets",
+            "dependencies": [
+                4,
+                5
             ]
         }
     ]
