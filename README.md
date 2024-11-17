@@ -3,7 +3,7 @@ A Flask-based API for interacting with [Pinata](https://www.pinata.cloud/) (IPFS
 
 ---
 ## The Team
-- [DylanDtm](https://github.com/DylanDtm4): Front end developer
+- [DylanDtm4](https://github.com/DylanDtm4): Front end developer
 - [NealKapadia](https://github.com/NealKapadia): Front end developer
 - [JuuyouSan](https://github.com/JuuyouSan): Back end developer
 - [justi-lai](https://github.com/justi-lai): Back end developer
