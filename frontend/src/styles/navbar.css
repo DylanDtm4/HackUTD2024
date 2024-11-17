@@ -1,0 +1,43 @@
+/* Navbar Styling */
+.navbar {
+  color: white;
+  top: 0;
+  z-index: 1000;
+  width: 50%; /* Makes the navbar less wide */
+  margin: 0 auto; /* Centers the navbar on the page */
+  border-radius: 6px; /* Adds a slight rounded effect if desired */
+  background: transparent;
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  height: 30px;
+}
+
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px; /* Spacing between links */
+}
+
+.navbar .nav-links li {
+  display: inline;
+  background-color: white;
+}
+
+.navbar .nav-links a {
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+  color: #40b7ba;
+  font-size: 18px; /* Slightly smaller text size for compactness */
+  transition: color 0.3s ease;
+  padding: 10px 20px; /* Smaller padding for links */
+  border-radius: 4px; /* Optional: Rounded background for hover effect */
+}
+
+.navbar .nav-links a:hover {
+  background-color: rgba(84, 221, 232, 0.2);
+}
