@@ -1,6 +1,8 @@
 from flask import Blueprint, request, jsonify
 import requests
 import os
+from utils.app_samba import prompt_Samba_json, prompt_Samba_result
+from utils.app_solver import solve
 
 api_routes = Blueprint('api_routes', __name__)
 
@@ -110,9 +112,12 @@ def process_string():
         # Get the string content
         content = data['content']
 
-        # Process the string as needed (Example: Reverse the string)
-        processed_content = content[::-1]  # Reversing the string as an example
-        # Return the processed content
+        # # Process the string as needed (Example: Reverse the string)
+        # processed_content = content[::-1]  # Reversing the string as an example
+        # # Return the processed content
+        json_string = prompt_Samba_json(content)
+        results = solve(json_string)
+        processed_content = prompt_Samba_result(results, json_string)
         return jsonify({'processedContent': processed_content})
     except Exception as e:
         # Handle unexpected errors gracefully
