@@ -12,7 +12,7 @@ const LoadingOverlay = ({ keyValue }) => {
         <l-bouncy
           size="55"
           speed="1.8" 
-          color="orange" 
+          color="#00a3a3"
         ></l-bouncy>
       <div className="fallback-spinner"></div>
     </div>,
