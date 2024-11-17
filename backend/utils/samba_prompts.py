@@ -1,6 +1,7 @@
 categorization_prompt = """
 You are a tool for breaking down math word problems into structured JSON format to eventually be structured into a tree and topologically sorted.
-Do not add the heading and ending ```.
+Output **only the JSON string** with no other explanations, formatting, or code block markers. 
+Do not include any prefixes, backticks, or extra text. Only provide the raw JSON structure.
 
 Your task:
     1. Decompose the math word problem into steps.
@@ -21,6 +22,7 @@ Your task:
         - Dependencies (list of previous step IDs required for this step).
           - Only operations other than identify will have dependencies. 
           - For chained operations with more than two dependencies, break them into smaller steps of two dependencies.
+          - Dependencies are a fixed amount and are not variable for each operation.
     3. If an operation requires more than two dependencies, create intermediate steps such that each intermediate step depends on at most two prior steps.
     4. Include the exact mathematical operation used (e.g., addition: a + b, division: a / b).
 
@@ -30,6 +32,7 @@ Rules:
         - Step 1: Add a and b to get a partial result.
         - Step 2: Add the partial result to c.
         - Step 3: Add the new partial result to d.
+    - All constants, coefficients, and exponents will be identified first.
     - Always use descriptive names for formulas and descriptions.
     - Do not give the wrong number of dependencies for the operation.
     - Do not nest dependencies.
@@ -38,6 +41,158 @@ Rules:
 Notes to remember:
     - Keep in mind to not cause accidental double negatives by saying 0 - 3 as 0 sub -3.
     - Try to make fractions/proportions into constants first before operating.
+
+Example input: "Solve this polynomial equation: f(x) = 4x^3 + 2x^2 - 3x + 5 for x = 2."
+
+Example output:
+{
+    "steps": [
+        {
+            "id": 1,
+            "operation": "identify",
+            "formula": null,
+            "value": 4,
+            "description": "Coefficient of x^3",
+            "dependencies": []
+        },
+        {
+            "id": 2,
+            "operation": "identify",
+            "formula": null,
+            "value": 2,
+            "description": "Coefficient of x^2",
+            "dependencies": []
+        },
+        {
+            "id": 3,
+            "operation": "identify",
+            "formula": null,
+            "value": -3,
+            "description": "Coefficient of x",
+            "dependencies": []
+        },
+        {
+            "id": 4,
+            "operation": "identify",
+            "formula": null,
+            "value": 5,
+            "description": "Constant term",
+            "dependencies": []
+        },
+        {
+            "id": 5,
+            "operation": "identify",
+            "formula": null,
+            "value": 1,
+            "description": "Exponent for x^1 term",
+            "dependencies": []
+        },
+        {
+            "id": 6,
+            "operation": "identify",
+            "formula": null,
+            "value": 2,
+            "description": "Exponent for x^2 term",
+            "dependencies": []
+        },
+        {
+            "id": 7,
+            "operation": "identify",
+            "formula": null,
+            "value": 3,
+            "description": "Exponent for x^3 term",
+            "dependencies": []
+        },
+        {
+            "id": 8,
+            "operation": "pow",
+            "formula": "x_cubed = x^3",
+            "value": null,
+            "description": "Calculate x cubed",
+            "dependencies": [
+                5,
+                7
+            ]
+        },
+        {
+            "id": 9,
+            "operation": "mult",
+            "formula": "term1 = coefficient_x_cubed * x_cubed",
+            "value": null,
+            "description": "Multiply coefficient of x^3 by x^3",
+            "dependencies": [
+                1,
+                8
+            ]
+        },
+        {
+            "id": 10,
+            "operation": "pow",
+            "formula": "x_squared = x^2",
+            "value": null,
+            "description": "Calculate x squared",
+            "dependencies": [
+                5,
+                6
+            ]
+        },
+        {
+            "id": 11,
+            "operation": "mult",
+            "formula": "term2 = coefficient_x_squared * x_squared",
+            "value": null,
+            "description": "Multiply coefficient of x^2 by x^2",
+            "dependencies": [
+                2,
+                10
+            ]
+        },
+        {
+            "id": 12,
+            "operation": "mult",
+            "formula": "term3 = coefficient_x * x",
+            "value": null,
+            "description": "Multiply coefficient of x by x",
+            "dependencies": [
+                3,
+                5
+            ]
+        },
+        {
+            "id": 13,
+            "operation": "add",
+            "formula": "partial_sum1 = term1 + term2",
+            "value": null,
+            "description": "Add terms for x^3 and x^2",
+            "dependencies": [
+                9,
+                11
+            ]
+        },
+        {
+            "id": 14,
+            "operation": "add",
+            "formula": "partial_sum2 = partial_sum1 + term3",
+            "value": null,
+            "description": "Add terms for x^3, x^2, and x",
+            "dependencies": [
+                13,
+                12
+            ]
+        },
+        {
+            "id": 15,
+            "operation": "add",
+            "formula": "polynomial = partial_sum2 + constant",
+            "value": null,
+            "description": "Add constant term to the polynomial",
+            "dependencies": [
+                14,
+                4
+            ]
+        }
+    ]
+}
 
 Example input: "Sophia collected $5 from her mother, $8 from her father, $12 from her aunt, and $10 from her uncle. She then spent $20 on toys and saved the remaining money. How much money did Sophia save?"
 
@@ -222,69 +377,55 @@ Example output:
     ]
 }
 
-Example INCORRECT Output:
+***Example INCORRECT Outputs***
+
+Nested Dependencies:
 {
-    "steps": [
-        {
-            "id": 1,
-            "operation": "identify",
-            "formula": null,
-            "value": 120,
-            "description": "Number of seats per row in VIP section",
-            "dependencies": []
-        },
-        {
-            "id": 2,
-            "operation": "identify",
-            "formula": null,
-            "value": 5,
-            "description": "Number of rows in VIP section",
-            "dependencies": []
-        },
-        {
-            "id": 3,
-            "operation": "mult",
-            "formula": "total_seats = seats_per_row * number_of_rows",
-            "value": null,
-            "description": "Calculate total number of seats in VIP section",
-            "dependencies": [
-                1,
-                2
-            ]
-        },
-        {
-            "id": 4,
-            "operation": "mult",
-            "formula": "seats_sold = total_seats * 0.5",
-            "value": null,
-            "description": "Calculate number of seats sold",
-            "dependencies": [
-                3                               // Error here because mult should have two dependencies
-            ]
-        },
-        {
-            "id": 5,
-            "operation": "identify",
-            "formula": null,
-            "value": 50,
-            "description": "Cost of each ticket",
-            "dependencies": []
-        },
-        {
-            "id": 6,
-            "operation": "mult",
-            "formula": "total_money_earned = seats_sold * ticket_cost",
-            "value": null,
-            "description": "Calculate total money earned from sold tickets",
-            "dependencies": [
-                4,
-                5
-            ]
-        }
+    "id": 2,
+    "operation": "mult",
+    "formula": "total_seats = seats_per_row * number_of_rows",
+    "value": null,
+    "description": "Calculate total number of seats in VIP section",
+    "dependencies": [
+        1,
+            {
+                "id": 2.1,
+                "operation": "identify",
+                "formula": null,
+                "value": 5,
+                "description": "Number of rows in VIP section",
+                "dependencies": []
+            }
     ]
 }
 
-Always output JSON in this format, breaking chained operations into multiple steps as described.
+Not enough dependencies
+{
+    "id": 3,
+    "operation": "mult",
+    "formula": "seats_sold = total_seats * 0.5",
+    "value": null,
+    "description": "Calculate number of seats sold",
+    "dependencies": [
+        2
+    ]
+}
+
+Too many dependencies
+{
+    "id": 3,
+    "operation": "pow",
+    "formula": "x_cubed = x * x * x",
+    "value": null,
+    "description": "Calculate x^3",
+    "dependencies": [
+        1,
+        1,
+        1
+    ]
+}
+
+Always output JSON in this format and remember to breaking chained operations into multiple steps as described.
 """
 
 result_prompt = """
