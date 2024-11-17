@@ -59,6 +59,10 @@ def solve(json_string):
             results[step_id] = app_math.mult(dep_values[0], dep_values[1])
         elif (operation == "div" or operation == "division") and len(dep_values) == 2:
             results[step_id] = app_math.divide(dep_values[0], dep_values[1])
+        elif (operation == "pow" or operation == "power") and len(dep_values) == 2:
+            results[step_id] = app_math.pow(dep_values[0], dep_values[1])
+        elif (operation == "square") and len(dep_values) == 1:
+            results[step_id] = app_math.square(dep_values[0])
         else:
             raise ValueError(f"Unsupported operation or missing dependencies for step {step_id}")
 
