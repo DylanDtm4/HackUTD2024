@@ -96,3 +96,24 @@ def delete_file(hash):
             return jsonify({'error': 'Failed to delete file', 'details': error_details}), response.status_code
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@api_routes.route('/process-string', methods=['POST'])
+def process_string():
+    try:
+        # Access the JSON body sent in the request
+        data = request.json
+
+        # Validate the presence of the 'content' key
+        if 'content' not in data:
+            return jsonify({'error': 'No content provided'}), 400
+
+        # Get the string content
+        content = data['content']
+
+        # Process the string as needed (Example: Reverse the string)
+        processed_content = content[::-1]  # Reversing the string as an example
+        # Return the processed content
+        return jsonify({'processedContent': processed_content})
+    except Exception as e:
+        # Handle unexpected errors gracefully
+        return jsonify({'error': str(e)}), 500

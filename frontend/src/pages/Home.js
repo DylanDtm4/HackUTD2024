@@ -12,25 +12,12 @@ function Home() {
         precision, and ease. Here's how you can make the most of its features:
       </p>
 
-      <h2>1. Files Page</h2>
-      <p>This is where your journey begins!</p>
+      <h2>1. Solve Page</h2>
+      <p>This is where the magic happens!</p>
       <ol className="list-style">
         <li>
           <strong>Upload Files:</strong> Add your word problem files to the
           project's database.
-        </li>
-        <li>
-          <strong>Manage Files:</strong> Remove files that are no longer needed,
-          keeping your workspace clean and organized.
-        </li>
-      </ol>
-
-      <h2>2. Calculate Page</h2>
-      <p>Let the magic happen!</p>
-      <ol className="list-style">
-        <li>
-          <strong>Select a File:</strong> Choose a word problem file from your
-          uploaded list.
         </li>
         <li>
           <strong>Compute Solutions:</strong> TopoLogic extracts variables,
@@ -41,9 +28,13 @@ function Home() {
           <strong>Detailed Results:</strong> View the solution along with a
           step-by-step explanation to understand how it was solved.
         </li>
+        <li>
+          <strong>Manage Files:</strong> Remove files that are no longer needed,
+          keeping your workspace clean and organized.
+        </li>
       </ol>
 
-      <h2>3. About Page</h2>
+      <h2>2. About Page</h2>
       <p>Curious about TopoLogic?</p>
       <ol className="list-style">
         <li>

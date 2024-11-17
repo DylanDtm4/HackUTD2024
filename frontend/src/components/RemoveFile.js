@@ -69,7 +69,7 @@ const RemoveFile = () => {
 
   return (
     <div className="container">
-      <h1>Manage Uploaded Files</h1>
+      <h1>Manage Solution Files</h1>
       {files.length > 0 ? (
         <ul>
           {files.map((file) => (
