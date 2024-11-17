@@ -22,5 +22,5 @@ A Flask-based API for interacting with [Pinata](https://www.pinata.cloud/) (IPFS
 
 ---
 ## Future Features
-- **More Math Function**: Currently, this program only offers simple arithmetic. Possible future features could involve calculus
+- **More Math Function**: Currently, this program only offers math solutions from arithmetic up to linera algebra. Possible future features could include calculus and numerical analysis
 - **More File Diversity**: The program is capable of only reading .txt files. Future possible features could involve reading from .pdf files or image files
