@@ -11,3 +11,9 @@ def divide(a, b):
     if b == 0:
         raise ZeroDivisionError("Division by zero is not allowed.")
     return a / b
+
+def square(x):
+    return x ** 2
+
+def pow(x, y):
+    return x ** y
