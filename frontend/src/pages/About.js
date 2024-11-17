@@ -8,7 +8,8 @@ function About() {
       <p>
         Meet <strong>TopoLogic</strong>, the ultimate app for solving word
         problems with speed and precision, powered by the blazing performance of
-        SambaNova. TopoLogic transforms complex problems into solutions by:
+        SambaNova and the cutting-edge file storage technology of Pinata.
+        TopoLogic transforms complex problems into solutions by:
       </p>
       <ol>
         <li>
